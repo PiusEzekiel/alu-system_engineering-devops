@@ -13,6 +13,10 @@ echo 'server {
         return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
     }
 
+    location / {
+        return 404;
+    }
+
     # Add your other server blocks and configurations here
 
 }' > /etc/nginx/sites-available/redirect.conf
