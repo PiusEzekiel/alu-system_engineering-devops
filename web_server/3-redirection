@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Install Nginx if not already installed
+apt-get update
+apt-get install -y nginx
+
+# Create a new Nginx configuration file for the redirection
+echo 'server {
+    listen 80;
+    server_name epius.tech;
+
+    location /redirect_me {
+        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+    }
+
+    # Add your other server blocks and configurations here
+
+}' > /etc/nginx/sites-available/redirect.conf
+
+# Enable the new configuration by creating a symbolic link
+ln -s /etc/nginx/sites-available/redirect.conf /etc/nginx/sites-enabled/
+
+# Remove the default Nginx configuration file
+rm /etc/nginx/sites-enabled/default
+
+# Test the Nginx configuration
+nginx -t
+
+# Restart Nginx to apply the changes
+service nginx restart
